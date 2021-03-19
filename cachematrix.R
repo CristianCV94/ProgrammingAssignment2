@@ -1,15 +1,35 @@
-## Put comments here that give an overall description of what your
-## functions do
+## This is about solving the inverse of a matrix by the result
+## with a lexical scope function
 
-## Write a short comment describing this function
 
-makeCacheMatrix <- function(x = matrix()) {
+## The function "make_Cache_Matrix" created a new environment
+## 
 
+make_Cache_Matrix <- function(x= matrix()){
+  inver <- NULL
+  set <- function(y){
+    x <<- y
+    inver <<- NULL
+  }
+  get <- function(){x}
+  setInverse <- function(inverse){inver <<- inverse}
+  getInverse <- function(){inver}
+  list(set= set, get=get, setInverse= setInverse, getInverse=getInverse)
 }
 
 
-## Write a short comment describing this function
+## The function "cache_Solve" returns the inverse of the matrix returned 
+## by the "make_Cache_Matrix" function
 
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cache_Solve <- function(x, ...){
+  inver <- x$getInverse()
+  if(!is.null(inver)){
+    message("getting cathced data")
+    return(inver)
+  }
+  data<- x$get()
+  inver <- solve(data, ...)
+  x$setInverse(inver)
+  inver
 }
+
